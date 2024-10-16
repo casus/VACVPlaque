@@ -1,0 +1,48 @@
+import numpy as np
+
+from stardist.src.utils.hydranet import create_assimilated_dict
+
+def main():
+    # For 5 trials, can be externded to incorporate more
+    l1 = [dict(criterion='iou', thresh=0.1, fp=254, tp=860, fn=2702, precision=0.7719928186714542, recall=0.24143739472206627, accuracy=0.22536687631027252, f1=0.3678357570573139, n_true=3562, n_pred=1114, mean_true_score=0.14564722562224458, mean_matched_score=0.6032504856586456, panoptic_quality=0.22189709908744024, by_image=False), 
+        dict(criterion='iou', thresh=0.2, fp=286, tp=828, fn=2734, precision=0.7432675044883303, recall=0.23245367770915215, accuracy=0.2151767151767152, f1=0.3541488451668092, n_true=3562, n_pred=1114, mean_true_score=0.14426830971528812, mean_matched_score=0.620632511118184, panoptic_quality=0.21979628708548174, by_image=False), 
+        dict(criterion='iou', thresh=0.3, fp=331, tp=783, fn=2779, precision=0.7028725314183124, recall=0.21982032565974172, accuracy=0.2011302337528898, f1=0.334901625320787, n_true=3562, n_pred=1114, mean_true_score=0.1410880426822386, mean_matched_score=0.6418334713079615, panoptic_quality=0.21495107272631903, by_image=False), 
+        dict(criterion='iou', thresh=0.4, fp=393, tp=721, fn=2841, precision=0.6472172351885098, recall=0.20241437394722067, accuracy=0.18230088495575222, f1=0.3083832335329341, n_true=3562, n_pred=1114, mean_true_score=0.13504903429281437, mean_matched_score=0.6671909294743479, panoptic_quality=0.20575049621514319, by_image=False), 
+        dict(criterion='iou', thresh=0.5, fp=469, tp=645, fn=2917, precision=0.5789946140035906, recall=0.1810780460415497, accuracy=0.16000992309600595, f1=0.27587681779298545, n_true=3562, n_pred=1114, mean_true_score=0.12532918591100403, mean_matched_score=0.6921280003333277, panoptic_quality=0.1909420702373808, by_image=False), 
+        dict(criterion='iou', thresh=0.6, fp=621, tp=493, fn=3069, precision=0.44254937163375224, recall=0.13840539023020776, accuracy=0.11785799665311977, f1=0.21086398631308811, n_true=3562, n_pred=1114, mean_true_score=0.10182528631999076, mean_matched_score=0.7357031843241524, panoptic_quality=0.1551333061898234, by_image=False), 
+        dict(criterion='iou', thresh=0.7, fp=806, tp=308, fn=3254, precision=0.2764811490125673, recall=0.08646827624929815, accuracy=0.07051282051282051, f1=0.1317365269461078, n_true=3562, n_pred=1114, mean_true_score=0.06769227315575002, mean_matched_score=0.782856743444096, panoptic_quality=0.10313082847766533, by_image=False), 
+        dict(criterion='iou', thresh=0.8, fp=1006, tp=108, fn=3454, precision=0.09694793536804308, recall=0.030320044918585063, accuracy=0.023642732049036778, f1=0.046193327630453376, n_true=3562, n_pred=1114, mean_true_score=0.025512469360361202, mean_matched_score=0.8414390357556166, panoptic_quality=0.03886886905971197, by_image=False), 
+        dict(criterion='iou', thresh=0.9, fp=1111, tp=3, fn=3559, precision=0.0026929982046678637, recall=0.0008422234699606962, accuracy=0.0006419858763107211, f1=0.0012831479897348161, n_true=3562, n_pred=1114, mean_true_score=0.0007623463685026603, mean_matched_score=0.9051592548688253, panoptic_quality=0.001161453278274797, by_image=False)]
+
+    l2 = [dict(criterion='iou', thresh=0.1, fp=191, tp=908, fn=2654, precision=0.8262056414922657, recall=0.2549129702414374, accuracy=0.24193978150812684, f1=0.38961596223986267, n_true=3562, n_pred=1099, mean_true_score=0.17548377627840475, mean_matched_score=0.6884066201582354, panoptic_quality=0.26821420772524257, by_image=False), 
+        dict(criterion='iou', thresh=0.2, fp=209, tp=890, fn=2672, precision=0.8098271155595996, recall=0.24985962942167322, accuracy=0.23601166799257492, f1=0.3818922977901738, n_true=3562, n_pred=1099, mean_true_score=0.17466721177134603, mean_matched_score=0.6990613576736343, panoptic_quality=0.2669661481783027, by_image=False), 
+        dict(criterion='iou', thresh=0.3, fp=228, tp=871, fn=2691, precision=0.7925386715195633, recall=0.24452554744525548, accuracy=0.22981530343007917, f1=0.3737395408710577, n_true=3562, n_pred=1099, mean_true_score=0.17329722415323273, mean_matched_score=0.708708051014713, panoptic_quality=0.264872221597861, by_image=False), 
+        dict(criterion='iou', thresh=0.4, fp=250, tp=849, fn=2713, precision=0.7725204731574158, recall=0.23834924199887703, accuracy=0.2227177334732424, f1=0.36429950654366017, n_true=3562, n_pred=1099, mean_true_score=0.17117759894949877, mean_matched_score=0.718179749656201, panoptic_quality=0.2616325284094034, by_image=False), 
+        dict(criterion='iou', thresh=0.5, fp=294, tp=805, fn=2757, precision=0.732484076433121, recall=0.22599663110612014, accuracy=0.2087655601659751, f1=0.34541943788886503, n_true=3562, n_pred=1099, mean_true_score=0.16553554927814149, mean_matched_score=0.7324691012779379, panoptic_quality=0.25300906523438743, by_image=False), 
+        dict(criterion='iou', thresh=0.6, fp=401, tp=698, fn=2864, precision=0.635122838944495, recall=0.19595732734418866, accuracy=0.17612919505425184, f1=0.2995065436601588, n_true=3562, n_pred=1099, mean_true_score=0.14896302961821237, mean_matched_score=0.7601809620344878, panoptic_quality=0.2276791724952038, by_image=False), 
+        dict(criterion='iou', thresh=0.7, fp=586, tp=513, fn=3049, precision=0.46678798908098273, recall=0.14402021336327905, accuracy=0.12367405978784957, f1=0.2201244368161339, n_true=3562, n_pred=1099, mean_true_score=0.11505584804480294, mean_matched_score=0.7988868045528033, panoptic_quality=0.17585450793202664, by_image=False), 
+        dict(criterion='iou', thresh=0.8, fp=858, tp=241, fn=3321, precision=0.21929026387625114, recall=0.06765861875350926, accuracy=0.054524886877828055, f1=0.10341128513194593, n_true=3562, n_pred=1099, mean_true_score=0.05760451180756862, mean_matched_score=0.8513994649732756, panoptic_quality=0.08804431283353761, by_image=False), 
+        dict(criterion='iou', thresh=0.9, fp=1074, tp=25, fn=3537, precision=0.022747952684258416, recall=0.007018528916339135, accuracy=0.005392579810181191, f1=0.010727311735679038, n_true=3562, n_pred=1099, mean_true_score=0.00643049445733269, mean_matched_score=0.9162168502807617, panoptic_quality=0.0098285437704437, by_image=False)]
+
+    l3 = [dict(criterion='iou', thresh=0.1, fp=128, tp=722, fn=2840, precision=0.8494117647058823, recall=0.20269511510387422, accuracy=0.1956639566395664, f1=0.3272892112420671, n_true=3562, n_pred=850, mean_true_score=0.14002100147352936, mean_matched_score=0.6907961319234233, panoptic_quality=0.22609012114628813, by_image=False), 
+        dict(criterion='iou', thresh=0.2, fp=137, tp=713, fn=2849, precision=0.8388235294117647, recall=0.20016844469399214, accuracy=0.19275479859421465, f1=0.3232094288304624, n_true=3562, n_pred=850, mean_true_score=0.13963917659565278, mean_matched_score=0.6976083408607507, panoptic_quality=0.22547359339696973, by_image=False), 
+        dict(criterion='iou', thresh=0.3, fp=152, tp=698, fn=2864, precision=0.8211764705882353, recall=0.19595732734418866, accuracy=0.18793753365643512, f1=0.31640979147778786, n_true=3562, n_pred=850, mean_true_score=0.1385881232786955, mean_matched_score=0.7072362394250908, panoptic_quality=0.22377647104202783, by_image=False), 
+        dict(criterion='iou', thresh=0.4, fp=175, tp=675, fn=2887, precision=0.7941176470588235, recall=0.18950028074115666, accuracy=0.1806261707251806, f1=0.3059836808703536, n_true=3562, n_pred=850, mean_true_score=0.1363328892584934, mean_matched_score=0.7194337059833386, panoptic_quality=0.22013497349898165, by_image=False), 
+        dict(criterion='iou', thresh=0.5, fp=204, tp=646, fn=2916, precision=0.76, recall=0.18135878719820325, accuracy=0.17153478491768454, f1=0.2928377153218495, n_true=3562, n_pred=850, mean_true_score=0.1325796655160132, mean_matched_score=0.7310352454613606, panoptic_quality=0.21407469110065228, by_image=False), 
+        dict(criterion='iou', thresh=0.6, fp=286, tp=564, fn=2998, precision=0.6635294117647059, recall=0.15833801235261089, accuracy=0.14656964656964658, f1=0.2556663644605621, n_true=3562, n_pred=850, mean_true_score=0.11971843031803454, mean_matched_score=0.7560940581433316, panoptic_quality=0.19330781903573846, by_image=False), 
+        dict(criterion='iou', thresh=0.7, fp=453, tp=397, fn=3165, precision=0.46705882352941175, recall=0.11145423919146547, accuracy=0.09887920298879203, f1=0.1799637352674524, n_true=3562, n_pred=850, mean_true_score=0.08894143194579328, mean_matched_score=0.7980085153423568, panoptic_quality=0.14361259319624464, by_image=False), 
+        dict(criterion='iou', thresh=0.8, fp=662, tp=188, fn=3374, precision=0.2211764705882353, recall=0.052779337450870295, accuracy=0.04450757575757576, f1=0.08522212148685404, n_true=3562, n_pred=850, mean_true_score=0.044862888305793644, mean_matched_score=0.8500085539640264, panoptic_quality=0.07243953225078738, by_image=False), 
+        dict(criterion='iou', thresh=0.9, fp=832, tp=18, fn=3544, precision=0.021176470588235293, recall=0.0050533408197641775, accuracy=0.004096495220755576, f1=0.008159564823209429, n_true=3562, n_pred=850, mean_true_score=0.004612477926107554, mean_matched_score=0.9127581318219503, panoptic_quality=0.007447709144512741, by_image=False)]
+
+    # l4 = []
+    # l5 = []
+    metric = 'mean_true_score' 
+    #'accuracy' is the AP
+    #'mean_true_score' is the IoU_R.
+
+    # asd = create_assimilated_dict(l1,l2,l3,l4,l5,metric)
+    asd = create_assimilated_dict(l1,l2,l3,metric)
+    print(asd) 
+
+if __name__ == "__main__":
+    main() # pylint: disable=no-value-for-parameter

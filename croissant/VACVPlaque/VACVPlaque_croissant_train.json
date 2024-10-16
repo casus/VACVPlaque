@@ -1,0 +1,227 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "name": "VACVPlaque_train",
+  "description": "The VACVPlaque dataset comprises spatially correlated objects, specifically virological plaques, whichare circular phenotypes indicative of vaccinia virus (VACV) spread, and the wells of the assay plate.",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "citeAs": "10.14278/rodare.3003",
+  "datePublished": "2024-06-05 00:00:00",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "url": "https://rodare.hzdr.de/record/3003",
+  "version": "1.0.0",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "VACVPlaque_train.zip",
+      "name": "VACVPlaque_train",
+      "description": "VACVPlaque dataset.",
+      "contentSize": "1.2G",
+      "contentUrl": "https://rodare.hzdr.de/record/3003/files/VACVPlaque_train.zip?download=1",
+      "encodingFormat": "application/zip",
+      "sha256": "4ad4c4ec3ecf308a4fd08098fc78da7f3720750a65747c1bccd584438d3eb84d"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "image_files",
+      "name": "image_files",
+      "containedIn": {
+        "@id": "VACVPlaque_train.zip"
+      },
+      "encodingFormat": "image/tiff",
+      "includes": "images/*.tif"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "plaque_mask_files",
+      "name": "plaque_mask_files",
+      "containedIn": {
+        "@id": "VACVPlaque_train.zip"
+      },
+      "encodingFormat": "image/tiff",
+      "includes": "plaque_masks/*.tif"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "well_mask_files",
+      "name": "well_mask_files",
+      "containedIn": {
+        "@id": "VACVPlaque_train.zip"
+      },
+      "encodingFormat": "image/tiff",
+      "includes": "well_masks/*.tif"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "images",
+      "name": "images",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "images/filename",
+          "name": "filename",
+          "description": "The name of the image file.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "image_files"
+            },
+            "extract": {
+              "fileProperty": "filename"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images/image",
+          "name": "image",
+          "description": "A 2448 x 3264 RGB uint8 photograph of an assay plate.",
+          "dataType": "sc:ImageObject",
+          "source": {
+            "fileSet": {
+              "@id": "image_files"
+            },
+            "extract": {
+              "fileProperty": "content"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "plaque_masks",
+      "name": "plaque_masks",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "plaque_masks/filename",
+          "name": "filename",
+          "description": "The name of the mask file.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "plaque_mask_files"
+            },
+            "extract": {
+              "fileProperty": "filename"
+            }
+          },
+          "references": {
+            "field": {
+              "@id": "images/filename"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "plaque_masks/mask",
+          "name": "mask",
+          "description": "A 2448 x 3264 RGB uint8 instance segmentation mask, where 0 corresponds to background and 1, ..., n represent particle instance.",
+          "dataType": [
+            "cr:SegmentationMask",
+            "sc:ImageObject"
+          ],
+          "source": {
+            "fileSet": {
+              "@id": "plaque_mask_files"
+            },
+            "extract": {
+              "fileProperty": "content"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "well_masks",
+      "name": "well_masks",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "well_masks/filename",
+          "name": "filename",
+          "description": "The name of the mask file.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "well_mask_files"
+            },
+            "extract": {
+              "fileProperty": "filename"
+            }
+          },
+          "references": {
+            "field": {
+              "@id": "images/filename"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "well_masks/mask",
+          "name": "mask",
+          "description": "A 2448 x 3264 RGB uint8 instance segmentation mask, where 0 corresponds to background and 1, ..., n represent different wells.",
+          "dataType": [
+            "cr:SegmentationMask",
+            "sc:ImageObject"
+          ],
+          "source": {
+            "fileSet": {
+              "@id": "well_mask_files"
+            },
+            "extract": {
+              "fileProperty": "content"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
