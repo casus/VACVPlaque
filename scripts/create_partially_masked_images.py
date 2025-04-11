@@ -43,11 +43,11 @@ def main(config_file_path):
 
         #set random numbers
         # This decides how many wells to hide
-        # k = np.random.randint(low=0, high =3, size=1)
+        k = np.random.randint(low=0, high =3, size=1)
 
         # This decides which wells to hide
-        # k_ls = list(np.random.choice(np.arange(1,7), k, replace=False))
-        k_ls = [4,5,6]
+        k_ls = list(np.random.choice(np.arange(1,7), k, replace=False))
+        # For e.g. k_ls = [4,5,6]
         # find unique wells to mask, since we are using instance masks we know each unique value
         # in the mask corresponds to a well and making these as background solves our task
 

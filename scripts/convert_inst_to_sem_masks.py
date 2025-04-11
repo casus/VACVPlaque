@@ -35,9 +35,8 @@ def main(config_file_path):
 
         print(np.unique(img_array))
 
-        # image = Image.fromarray(np.uint8(img_array))
         image = Image.fromarray(img_array)
-        # image.save(target_dir / (source.stem + '.' + config['conversion']['target_type']))
+        image.save(target_dir / (source.stem + '.' + config['conversion']['target_type']))
 
 
 if __name__ == "__main__":

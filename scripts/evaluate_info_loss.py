@@ -66,17 +66,10 @@ class PythonLiteralOption(click.Option):
 
 @click.command()
 @click.option("--config_file_path", type=click.Path(exists=True))
-# @click.option(
-#     "--fold_res_l", cls=PythonLiteralOption, default=[0.2,0.3,0.5],
-#     help="Fold resolutions to compare", show_default=True
-#     )
-
 @click.option(
     "--iter", default=5, type=int,
     help="Number of times to iterate experiment for comparing info loss", show_default=True
     )
-
-# def main(config_file_path, fold_res_l, iter):
 
 def main(config_file_path, iter):
     config = read_json_config(config_file_path)
@@ -117,8 +110,8 @@ def main(config_file_path, iter):
 
     print(info_loss_df)
 
-    # boxplot_info_loss(info_loss_df, save_path = log_dir / "graph_info_loss.svg")
-    # barplot_info_loss(info_loss_df, save_path = log_dir / "graph_info_loss_plaque.svg")
+    boxplot_info_loss(info_loss_df, save_path = log_dir / "boxplot_info_loss.svg")
+    barplot_info_loss(info_loss_df, save_path = log_dir / "barplot_info_loss.svg")
 
 def find_info_loss2(fold_res_l, it, transform, config, parameters):
 
