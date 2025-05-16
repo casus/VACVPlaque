@@ -49,3 +49,6 @@ Since HSD our branched architectures shares plenty of common functionality with 
 from .model2d import Config2D, StarDist2D, StarDistData2D
 from .model2d_hydra import Config2D, StarDist2D, StarDistData2D
 ```
+
+## License
+This repository is shared under the BSD 3-Clause License.
